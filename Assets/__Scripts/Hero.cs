@@ -107,6 +107,7 @@ public class Hero : MonoBehaviour
         if (enemy != null)
         {  // If the shield was triggered by an enemy
             shieldLevel--;        // Decrease the level of the shield by 1
+            EventManager.OnShieldCount((int)shieldLevel,4);                         // C1 Notify that the shield count has changed
             Destroy(go);          // … and Destroy the enemy                  // f
         }
         else if (pUp != null)
@@ -168,6 +169,7 @@ public class Hero : MonoBehaviour
         {
             case eWeaponType.shield:                                              // a 
                 shieldLevel++;
+                EventManager.OnShieldCount((int)shieldLevel,4);                         // C1 Notify that the shield count has changed
                 break;
 
             default:                                                             // b
@@ -189,6 +191,11 @@ public class Hero : MonoBehaviour
 
         }
         pUp.AbsorbedBy(this.gameObject);
+    }
+
+    void Start()
+    {
+        EventManager.OnShieldCount((int)shieldLevel,4);                         // C1 The starting shield count
     }
 
 }

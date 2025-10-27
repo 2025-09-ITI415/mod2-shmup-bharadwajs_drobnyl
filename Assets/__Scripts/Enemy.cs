@@ -76,6 +76,7 @@ public class Enemy : MonoBehaviour
                     {
                         calledShipDestroyed = true;
                         Main.SHIP_DESTROYED(this);
+                        EventManager.OnEnemyKilled(); //B1 Trigger the EnemyKilled event to notify other parts of the game that an enemy has been destroyed
                     }
                     // Destroy this Enemy
                     Destroy(this.gameObject);

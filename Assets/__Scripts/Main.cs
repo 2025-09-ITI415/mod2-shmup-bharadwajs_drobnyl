@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;   // Enables the loading & reloading of scenes
+using UnityEngine.SceneManagement;// Enables the loading & reloading of scenes
+using TMPro; // Enables the use of TextMeshPro for text rendering
 
 [RequireComponent(typeof(BoundsCheck))]
 public class Main : MonoBehaviour
@@ -18,7 +19,7 @@ public class Main : MonoBehaviour
     public float gameRestartDelay = 2.0f;
     public GameObject prefabPowerUp;
     public WeaponDefinition[] weaponDefinitions;
-    public eWeaponType[] powerUpFrequency = new eWeaponType[] {        
+    public eWeaponType[] powerUpFrequency = new eWeaponType[] {
                                      eWeaponType.blaster, eWeaponType.blaster,
                                      eWeaponType.spread,  eWeaponType.shield };
     private BoundsCheck bndCheck;
@@ -133,6 +134,38 @@ public class Main : MonoBehaviour
             // Set it to the position of the destroyed ship
             pUp.transform.position = e.transform.position;
         }
+    }
+  
+    //A1 This method is called when the game starts. It triggers the TimerStart event, which allows the game to keep track of the elapsed time and update other UI elements accordingly
+    private void Start()
+    {
+        EventManager.OnTimerStart();
+    }
+    //B1 This method is called whenever the player kills an enemy. It increments the kill count and updates the kill text UI element to reflect the new count. 
+    [SerializeField] TMPro.TextMeshProUGUI killtext;
+    int killCount = 0;
+
+    void OnEnable()
+    {
+        EventManager.EnemyKilled += HandleEnemyKilled;
+        EventManager.ShieldCount += HandleShieldCount; //C1 Manages shield count event subscription
+    }
+    void OnDisable()
+    {
+        EventManager.EnemyKilled -= HandleEnemyKilled;
+        EventManager.ShieldCount -= HandleShieldCount; //C1 Manages shield count event subscription
+    }
+    void HandleEnemyKilled()
+    {
+        killCount++;
+        killtext.text = "Kills: " + killCount;
+    }
+    //C1 This method is called whenever the shield count changes. It updates the ShieldCount UI element to display the current and maximum shield values.
+    [SerializeField] private TMPro.TextMeshProUGUI ShieldCount;
+    
+    void HandleShieldCount(int currentShield, int maxShield)
+    {
+        ShieldCount.text = "Shield: " + currentShield + "/" + maxShield;
     }
 
 }
