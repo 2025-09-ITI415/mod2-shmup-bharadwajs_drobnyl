@@ -92,6 +92,9 @@ public class Weapon : MonoBehaviour
     public void SetType(eWeaponType wt)
     {
         _type = wt;
+        
+               
+        
         if (type == eWeaponType.none)
         {                                       // f
             this.gameObject.SetActive(false);
@@ -110,6 +113,9 @@ public class Weapon : MonoBehaviour
         weaponModel.transform.localScale = Vector3.one;
 
         nextShotTime = 0; // You can fire immediately after _type is set.    // h
+
+
+
     }
 
     private void Fire()
@@ -157,6 +163,10 @@ public class Weapon : MonoBehaviour
         nextShotTime = Time.time + def.delayBetweenShots;                    // p
         return (p);
     }
+  
+  
+
+    
 }
 
 

@@ -45,6 +45,8 @@ public class Hero : MonoBehaviour
         // Reset the weapons to start _Hero with 1 blaster
         ClearWeapons();
         weapons[0].SetType(eWeaponType.blaster);
+
+        EventManager.OnWeaponChanged(eWeaponType.blaster);                     // D1 Notify that the weapon has changed
     }
 
     void Update()
@@ -187,6 +189,7 @@ public class Hero : MonoBehaviour
                     ClearWeapons();
                     weapons[0].SetType(pUp.type);
                 }
+                EventManager.OnWeaponChanged(pUp.type);                     // D1 Notify that the weapon has changed
                 break;
 
         }

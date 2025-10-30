@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;// Enables the loading & reloading of scenes
-using TMPro; // Enables the use of TextMeshPro for text rendering
+using TMPro;
+using System.Runtime.CompilerServices; // Enables the use of TextMeshPro for text rendering
 
 [RequireComponent(typeof(BoundsCheck))]
 public class Main : MonoBehaviour
@@ -149,11 +150,16 @@ public class Main : MonoBehaviour
     {
         EventManager.EnemyKilled += HandleEnemyKilled;
         EventManager.ShieldCount += HandleShieldCount; //C1 Manages shield count event subscription
+        EventManager.WeaponChanged += HandleWeaponChanged; //D1 Manages weapon change event subscription
+
+
     }
     void OnDisable()
     {
         EventManager.EnemyKilled -= HandleEnemyKilled;
         EventManager.ShieldCount -= HandleShieldCount; //C1 Manages shield count event subscription
+        EventManager.WeaponChanged -= HandleWeaponChanged; //D1 Manages weapon change event subscription
+
     }
     void HandleEnemyKilled()
     {
@@ -167,5 +173,15 @@ public class Main : MonoBehaviour
     {
         ShieldCount.text = "Shield: " + currentShield + "/" + maxShield;
     }
+    //D1 This method is called whenever the player's weapon changes. It updates the WeaponText UI element to display the name of the new weapon.
+    [SerializeField] private TMPro.TextMeshProUGUI WeaponText;
+    void HandleWeaponChanged(eWeaponType Type)
+    {
+        WeaponText.text = "Weapon: " + Type.ToString();
+    }
+
+
+
+
 
 }

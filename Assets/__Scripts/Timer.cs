@@ -28,6 +28,7 @@ public class Timer : MonoBehaviour
         EventManager.TimerStart += EventManagerOnTimerStart;
         EventManager.TimerStop += EventManagerOnTimerStop;
         EventManager.TimerUpdate += EventmanagerOnTimerUpdate;
+
     }
 
     public void OnDisable()

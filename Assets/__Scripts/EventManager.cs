@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using UnityEditor;
 
 public static class EventManager
 {
@@ -27,7 +28,12 @@ public static class EventManager
     public static void OnShieldCount(int current,int max)
         => ShieldCount?.Invoke(current,max);
 
+    //D1 This section defines a static event called PowerUpCollected, which will allow the game to notify when a power-up is collected. This can be used to update the player's abilities or stats.
 
+    public static event Action<eWeaponType> WeaponChanged;
+
+    public static void OnWeaponChanged(eWeaponType Type)
+        => WeaponChanged?.Invoke(Type);
 
 
 }
